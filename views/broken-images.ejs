@@ -1,0 +1,20 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'broken-images' }) %>
+
+<p>Trois images : une valide, une avec un chemin inexistant (404), une dont le serveur renvoie une erreur 500.</p>
+
+<div class="image-row">
+  <figure>
+    <img id="image-valid" data-testid="image-valid" src="/img/valid.svg" alt="Image valide" width="120" height="80">
+    <figcaption>Valide</figcaption>
+  </figure>
+  <figure>
+    <img id="image-404" data-testid="image-404" src="/img/does-not-exist.png" alt="Image manquante" width="120" height="80">
+    <figcaption>404</figcaption>
+  </figure>
+  <figure>
+    <img id="image-500" data-testid="image-500" src="/broken-images/server-error" alt="Erreur serveur" width="120" height="80">
+    <figcaption>500</figcaption>
+  </figure>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,9 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'multiple-windows' }) %>
+
+<p>Ouvre une nouvelle page dans un nouvel onglet/fenêtre — nécessite de basculer entre les « handles » de fenêtre dans votre framework.</p>
+
+<a href="/multiple-windows/new" target="_blank" id="new-window-link" data-testid="new-window-link">Ouvrir dans un nouvel onglet (lien)</a>
+<br><br>
+<button type="button" id="new-window-button" data-testid="new-window-button">Ouvrir avec window.open()</button>
+
+<%- include('partials/footer', { script: '/js/multiple-windows.js' }) %>

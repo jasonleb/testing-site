@@ -1,0 +1,9 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'basic-auth' }) %>
+
+<% if (authenticated) { %>
+<p id="basic-auth-message" data-testid="basic-auth-message">Authentification réussie ! Vous avez accès à cette page protégée.</p>
+<% } else { %>
+<p id="basic-auth-message" data-testid="basic-auth-message">Authentification requise. Identifiants : <code>admin</code> / <code>admin</code> (le navigateur ou votre script doit fournir un en-tête <code>Authorization: Basic</code>).</p>
+<% } %>
+
+<%- include('partials/footer') %>

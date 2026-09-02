@@ -1,0 +1,6 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'login' }) %>
+
+<p id="secure-message" data-testid="secure-message">Vous êtes connecté. Bienvenue dans la zone sécurisée !</p>
+<a href="/logout" id="logout-link" data-testid="logout-link">Se déconnecter</a>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,29 @@
+  </div><!-- /.arcade-panel -->
+
+  <% var footerChallenge = (typeof challenges !== 'undefined' && challenges) ? challenges.find(function (c) { return c.id === locals.current; }) : null; %>
+  <% if (footerChallenge) {
+       var challengeIndex = challenges.indexOf(footerChallenge);
+       var prevChallenge = challenges[challengeIndex - 1];
+       var nextChallenge = challenges[challengeIndex + 1];
+  %>
+  <nav class="arcade-progress" aria-label="Navigation entre défis">
+    <% if (prevChallenge) { %>
+    <a href="<%= prevChallenge.path %>" class="arcade-progress-link" data-testid="progress-prev">◀ <%= prevChallenge.title %></a>
+    <% } else { %><span></span><% } %>
+    <span class="arcade-progress-count">Défi <%= challengeIndex + 1 %> / <%= challenges.length %></span>
+    <% if (nextChallenge) { %>
+    <a href="<%= nextChallenge.path %>" class="arcade-progress-link" data-testid="progress-next"><%= nextChallenge.title %> ▶</a>
+    <% } else { %><span></span><% } %>
+  </nav>
+  <% } %>
+</main>
+
+<footer class="arcade-site-footer">
+  <p>Créé par <a href="https://github.com/jasonleb/testing-site" target="_blank" rel="noopener">Jason LEBORGNE</a></p>
+</footer>
+
+<% if (typeof script !== 'undefined' && script) { %>
+<script src="<%= script %>"></script>
+<% } %>
+</body>
+</html>

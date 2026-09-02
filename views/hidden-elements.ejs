@@ -1,0 +1,31 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'hidden-elements' }) %>
+
+<p>Plusieurs façons de « cacher » un élément — toutes ne sont pas équivalentes du point de vue de l'automatisation (certaines restent cliquables techniquement, d'autres non).</p>
+
+<ul class="hidden-list">
+  <li>
+    <strong>display: none</strong> — retiré du rendu, invisible et non interactif.
+    <div id="hidden-display-none" class="demo-box hidden" data-testid="hidden-display-none">Élément (display:none)</div>
+    <button type="button" id="reveal-display-none" data-testid="reveal-display-none">Afficher</button>
+  </li>
+  <li>
+    <strong>visibility: hidden</strong> — garde sa place dans la mise en page mais reste invisible.
+    <div id="hidden-visibility" class="demo-box" style="visibility:hidden;" data-testid="hidden-visibility">Élément (visibility:hidden)</div>
+  </li>
+  <li>
+    <strong>opacity: 0</strong> — invisible à l'œil, mais toujours « cliquable » selon les frameworks.
+    <button type="button" id="hidden-opacity" class="demo-box" style="opacity:0;" data-testid="hidden-opacity">Élément (opacity:0)</button>
+  </li>
+  <li>
+    <strong>Positionné hors écran</strong> — techniquement dans le DOM, jamais visible à l'utilisateur.
+    <div id="hidden-offscreen" class="demo-box" style="position:absolute; left:-9999px;" data-testid="hidden-offscreen">Élément hors écran</div>
+  </li>
+  <li>
+    <strong>Taille nulle</strong> — un conteneur à 0×0px avec overflow caché.
+    <div style="width:0; height:0; overflow:hidden; border:0; padding:0;">
+      <span id="hidden-zero-size" data-testid="hidden-zero-size">Élément à taille nulle</span>
+    </div>
+  </li>
+</ul>
+
+<%- include('partials/footer', { script: '/js/hidden-elements.js' }) %>

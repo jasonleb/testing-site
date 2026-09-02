@@ -1,0 +1,10 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'slow-resource' }) %>
+
+<p>L'image et les données ci-dessous mettent volontairement ~3 secondes à répondre, pour tester vos attentes explicites/implicites.</p>
+
+<img id="slow-image" data-testid="slow-image" src="/slow-resource/image" alt="Image lente" width="200" height="120">
+
+<button type="button" id="load-data" data-testid="load-data">Charger les données lentes</button>
+<p id="slow-data-result" data-testid="slow-data-result"></p>
+
+<%- include('partials/footer', { script: '/js/slow-resource.js' }) %>

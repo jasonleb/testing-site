@@ -1,0 +1,2 @@
+Fichier de test pour la page /file-upload.
+Utilisé par tests/file-upload.spec.js.

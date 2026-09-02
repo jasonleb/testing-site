@@ -1,0 +1,19 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'login' }) %>
+
+<p>Identifiants valides : <code>testuser</code> / <code>Test1234!</code></p>
+
+<form action="/login" method="post" id="login-form" data-testid="login-form">
+  <label for="username">Nom d'utilisateur</label>
+  <input type="text" id="username" name="username" data-testid="username" autocomplete="username">
+
+  <label for="password">Mot de passe</label>
+  <input type="password" id="password" name="password" data-testid="password" autocomplete="current-password">
+
+  <button type="submit" id="login-submit" data-testid="login-submit">Se connecter</button>
+</form>
+
+<% if (error) { %>
+<p id="login-error" class="error" data-testid="login-error"><%= error %></p>
+<% } %>
+
+<%- include('partials/footer') %>

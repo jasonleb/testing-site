@@ -1,0 +1,6 @@
+<%- include('partials/header', { title: title, challenges: challenges }) %>
+
+<p id="error-message">Une erreur serveur est survenue<% if (typeof message !== 'undefined' && message) { %> : <%= message %><% } %>.</p>
+<p><a href="/">Retour à l'accueil</a></p>
+
+<%- include('partials/footer') %>

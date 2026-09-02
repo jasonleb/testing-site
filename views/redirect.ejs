@@ -1,0 +1,6 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'redirect' }) %>
+
+<p>Le lien ci-dessous déclenche une redirection HTTP 302 réelle vers une autre page.</p>
+<a href="/redirect/go" id="redirect-link" data-testid="redirect-link">Déclencher la redirection</a>
+
+<%- include('partials/footer') %>

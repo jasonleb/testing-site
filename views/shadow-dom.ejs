@@ -1,0 +1,7 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'shadow-dom' }) %>
+
+<p>Un <em>web component</em> dont le contenu vit dans un Shadow DOM — isolé du CSS global et non trouvable par un simple <code>document.querySelector</code> (il faut percer le <code>shadowRoot</code>).</p>
+
+<test-widget id="shadow-widget" data-testid="shadow-widget"></test-widget>
+
+<%- include('partials/footer', { script: '/js/shadow-dom.js' }) %>

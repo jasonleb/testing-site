@@ -1,0 +1,26 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'dropdown' }) %>
+
+<p>Un menu déroulant natif <code>&lt;select&gt;</code>, cible classique pour <code>Select</code> (Selenium) ou <code>selectOption</code> (Playwright).</p>
+
+<label for="dropdown">Choisissez une option :</label>
+<select id="dropdown" name="dropdown" data-testid="dropdown">
+  <option value="" disabled selected>Sélectionnez une option</option>
+  <option value="1">Option 1</option>
+  <option value="2">Option 2</option>
+</select>
+
+<p id="dropdown-result"></p>
+
+<h3>Menu déroulant personnalisé</h3>
+<p>Un menu construit avec des <code>&lt;div&gt;</code>/<code>&lt;ul&gt;</code> plutôt qu'un <code>&lt;select&gt;</code> natif — plus difficile à automatiser car il ne déclenche pas d'événements de formulaire standard.</p>
+<div class="custom-dropdown" id="custom-dropdown">
+  <button type="button" id="custom-dropdown-toggle" aria-haspopup="listbox" aria-expanded="false" data-testid="custom-dropdown-toggle">Sélectionnez une ville ▾</button>
+  <ul id="custom-dropdown-list" class="custom-dropdown-list hidden" role="listbox" data-testid="custom-dropdown-list">
+    <li role="option" data-value="geneve" data-testid="custom-dropdown-option-geneve">Genève</li>
+    <li role="option" data-value="lausanne" data-testid="custom-dropdown-option-lausanne">Lausanne</li>
+    <li role="option" data-value="zurich" data-testid="custom-dropdown-option-zurich">Zürich</li>
+  </ul>
+</div>
+<p id="custom-dropdown-result"></p>
+
+<%- include('partials/footer', { script: '/js/dropdown.js' }) %>

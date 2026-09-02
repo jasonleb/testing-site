@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= title %> · testing-site</title>
+<link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="navbar navbar-dark arcade-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/" data-testid="nav-brand">🕹️ testing-site</a>
+    <% if (locals.current !== 'home') { %>
+    <a class="btn btn-sm arcade-btn-outline" href="/" data-testid="nav-home">Tous les défis</a>
+    <% } %>
+  </div>
+</nav>
+<main class="container arcade-main">
+  <div class="arcade-panel">
+    <% var currentChallenge = (typeof challenges !== 'undefined' && challenges) ? challenges.find(function (c) { return c.id === locals.current; }) : null; %>
+    <% if (currentChallenge) { %>
+    <div class="challenge-meta">
+      <span class="badge arcade-chip" data-cat="<%= currentChallenge.category %>"><%= categories[currentChallenge.category] %></span>
+      <span class="arcade-gems" aria-label="Difficulté"><%= '●'.repeat(currentChallenge.difficulty) + '○'.repeat(3 - currentChallenge.difficulty) %></span>
+    </div>
+    <% } %>
+    <% if (locals.current !== 'home') { %>
+    <h2><%= title %></h2>
+    <% } %>

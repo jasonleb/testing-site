@@ -1,0 +1,26 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'tables' }) %>
+
+<p>Cliquez sur un en-tête de colonne pour trier le tableau (tri client, ordre alterné croissant/décroissant).</p>
+
+<table id="sortable-table" data-testid="sortable-table">
+  <thead>
+    <tr>
+      <th data-sort="text" data-testid="th-prenom">Prénom</th>
+      <th data-sort="text" data-testid="th-nom">Nom</th>
+      <th data-sort="number" data-testid="th-age">Âge</th>
+      <th data-sort="text" data-testid="th-ville">Ville</th>
+    </tr>
+  </thead>
+  <tbody id="sortable-tbody" data-testid="sortable-tbody">
+    <% rows.forEach(function (r) { %>
+    <tr data-testid="row-<%= r.id %>">
+      <td><%= r.prenom %></td>
+      <td><%= r.nom %></td>
+      <td><%= r.age %></td>
+      <td><%= r.ville %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<%- include('partials/footer', { script: '/js/tables.js' }) %>

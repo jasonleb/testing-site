@@ -1,0 +1,27 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'file-upload' }) %>
+
+<p>Formulaire d'envoi de fichier (multipart/form-data), traité côté serveur avec Multer.</p>
+
+<form action="/file-upload" method="post" enctype="multipart/form-data" id="upload-form" data-testid="upload-form">
+  <input type="file" id="file-input" name="file" data-testid="file-input">
+  <button type="submit" id="upload-submit" data-testid="upload-submit">Envoyer</button>
+</form>
+
+<% if (error) { %>
+<p id="upload-error" class="error" data-testid="upload-error"><%= error %></p>
+<% } %>
+<% if (uploaded) { %>
+<p id="upload-success" class="success" data-testid="upload-success">Fichier envoyé : <%= uploaded %></p>
+<% } %>
+
+<h3>Fichiers déjà envoyés</h3>
+<ul id="uploaded-files" data-testid="uploaded-files">
+  <% if (files.length === 0) { %>
+  <li>Aucun fichier pour le moment.</li>
+  <% } %>
+  <% files.forEach(function (f) { %>
+  <li><a href="/uploads/<%= f %>" data-testid="uploaded-file-link"><%= f %></a></li>
+  <% }); %>
+</ul>
+
+<%- include('partials/footer') %>

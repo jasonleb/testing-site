@@ -1,0 +1,13 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'checkboxes' }) %>
+
+<p>Deux cases avec des états initiaux différents, plus un bouton pour tout (dé)cocher via JavaScript.</p>
+
+<label><input type="checkbox" id="checkbox-1" data-testid="checkbox-1"> Case 1 (décochée par défaut)</label><br>
+<label><input type="checkbox" id="checkbox-2" data-testid="checkbox-2" checked> Case 2 (cochée par défaut)</label>
+
+<div class="button-row">
+  <button type="button" id="check-all" data-testid="check-all">Tout cocher</button>
+  <button type="button" id="uncheck-all" data-testid="uncheck-all">Tout décocher</button>
+</div>
+
+<%- include('partials/footer', { script: '/js/checkboxes.js' }) %>

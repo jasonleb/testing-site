@@ -1,0 +1,11 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'iframe' }) %>
+
+<p>Un éditeur de texte simplifié dans une <code>&lt;iframe&gt;</code> — pour automatiser il faut d'abord basculer le contexte vers le frame (<code>switch_to.frame</code> / <code>frame_locator</code>).</p>
+
+<iframe id="editor-frame" data-testid="editor-frame" title="Éditeur" srcdoc="&lt;body contenteditable='true' style='font-family:sans-serif;padding:12px;margin:0;'&gt;Votre texte ici…&lt;/body&gt;"></iframe>
+
+<h3>IFrame imbriquée</h3>
+<p>Une seconde iframe qui contient elle-même une iframe, pour tester la navigation à plusieurs niveaux de frames.</p>
+<iframe id="outer-frame" data-testid="outer-frame" title="Frame externe" srcdoc="&lt;body style='font-family:sans-serif;padding:8px;margin:0;'&gt;Frame externe&lt;br&gt;&lt;iframe id='inner-frame' data-testid='inner-frame' style='width:100%;height:80px;border:1px dashed #999;' srcdoc=&quot;&lt;body style=&#39;font-family:sans-serif;padding:8px;margin:0;&#39;&gt;Frame interne&lt;/body&gt;&quot;&gt;&lt;/iframe&gt;&lt;/body&gt;"></iframe>
+
+<%- include('partials/footer') %>

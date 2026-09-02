@@ -1,0 +1,12 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'status-codes' }) %>
+
+<p>Chaque lien renvoie réellement le code HTTP indiqué — utile pour tester la gestion des réponses (redirections suivies ou non, erreurs 4xx/5xx…).</p>
+
+<ul id="status-code-links">
+  <li><a href="/status-codes/200" data-testid="status-200">200 OK</a></li>
+  <li><a href="/status-codes/301" data-testid="status-301">301 Redirection permanente</a></li>
+  <li><a href="/status-codes/404" data-testid="status-404">404 Not Found</a></li>
+  <li><a href="/status-codes/500" data-testid="status-500">500 Internal Server Error</a></li>
+</ul>
+
+<%- include('partials/footer') %>

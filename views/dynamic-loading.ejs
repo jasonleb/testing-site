@@ -1,0 +1,15 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'dynamic-loading' }) %>
+
+<h3>Exemple 1 — élément masqué (display: none)</h3>
+<p>L'élément existe déjà dans le DOM mais reste invisible jusqu'à la fin du chargement.</p>
+<button type="button" id="start-1" data-testid="start-1">Démarrer</button>
+<div id="loading-1" class="loading hidden" data-testid="loading-1">Chargement…</div>
+<div id="finish-1" class="hidden" data-testid="finish-1">Élément chargé avec succès !</div>
+
+<h3>Exemple 2 — élément ajouté au DOM</h3>
+<p>Cette fois, l'élément n'existe pas du tout tant que le chargement n'est pas terminé (il faut donc attendre sa présence, pas juste sa visibilité).</p>
+<button type="button" id="start-2" data-testid="start-2">Démarrer</button>
+<div id="loading-2" class="loading hidden" data-testid="loading-2">Chargement…</div>
+<div id="container-2" data-testid="container-2"></div>
+
+<%- include('partials/footer', { script: '/js/dynamic-loading.js' }) %>

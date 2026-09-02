@@ -1,0 +1,7 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'status-codes' }) %>
+
+<p id="status-code" data-testid="status-code"><%= code %></p>
+<p id="status-message" data-testid="status-message"><%= message %></p>
+<p><a href="/status-codes">Retour</a></p>
+
+<%- include('partials/footer') %>

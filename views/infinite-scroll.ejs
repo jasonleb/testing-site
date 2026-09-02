@@ -1,0 +1,10 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'infinite-scroll' }) %>
+
+<p>De nouveaux paragraphes sont ajoutés automatiquement lorsque vous approchez du bas de la liste (chargement asynchrone via <code>/infinite-scroll/more</code>).</p>
+
+<div id="scroll-container" data-testid="scroll-container">
+  <div id="scroll-items" data-testid="scroll-items"></div>
+  <div id="scroll-sentinel" data-testid="scroll-sentinel">Chargement…</div>
+</div>
+
+<%- include('partials/footer', { script: '/js/infinite-scroll.js' }) %>

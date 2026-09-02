@@ -1,0 +1,25 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'home' }) %>
+
+<div class="arcade-hero">
+  <p class="arcade-eyebrow">Arcade des tests</p>
+  <h1>Entraîne ton script<br>contre 18 pièges réels</h1>
+  <p class="arcade-lead">Dropdowns, iframes, Shadow DOM, popups… Choisis un défi et vois si ton framework d'automatisation s'en sort.</p>
+</div>
+
+<div class="row g-4 arcade-grid" id="challenge-grid">
+  <% challenges.forEach(function (c) { %>
+  <div class="col-12 col-sm-6 col-lg-4">
+    <a href="<%= c.path %>" class="card arcade-card" data-testid="card-<%= c.id %>">
+      <span class="badge arcade-chip" data-cat="<%= c.category %>"><%= categories[c.category] %></span>
+      <h3 class="arcade-card-title"><%= c.title %></h3>
+      <p class="arcade-card-desc"><%= c.desc %></p>
+      <div class="arcade-card-foot">
+        <span class="arcade-gems" aria-label="Difficulté"><%= '●'.repeat(c.difficulty) + '○'.repeat(3 - c.difficulty) %></span>
+        <span class="arcade-path"><%= c.path %></span>
+      </div>
+    </a>
+  </div>
+  <% }); %>
+</div>
+
+<%- include('partials/footer') %>

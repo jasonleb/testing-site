@@ -1,0 +1,13 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'alerts' }) %>
+
+<p>Les popups natifs du navigateur (<code>alert</code>, <code>confirm</code>, <code>prompt</code>) bloquent l'exécution JS et doivent être gérés via l'API dialogue de votre framework.</p>
+
+<div class="button-row">
+  <button type="button" id="btn-alert" data-testid="btn-alert">Alerte simple</button>
+  <button type="button" id="btn-confirm" data-testid="btn-confirm">Confirmation</button>
+  <button type="button" id="btn-prompt" data-testid="btn-prompt">Prompt</button>
+</div>
+
+<p>Résultat : <span id="result" data-testid="alert-result">—</span></p>
+
+<%- include('partials/footer', { script: '/js/alerts.js' }) %>

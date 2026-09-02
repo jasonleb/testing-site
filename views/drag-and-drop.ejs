@@ -1,0 +1,10 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'drag-and-drop' }) %>
+
+<p>Glissez-déposez la case A sur la case B pour échanger leur contenu. Utilise l'API HTML5 <code>dragstart</code>/<code>dragover</code>/<code>drop</code>, réputée délicate à automatiser (les frameworks doivent simuler la séquence complète d'événements).</p>
+
+<div class="dnd-row">
+  <div id="column-a" class="dnd-box" draggable="true" data-testid="column-a">A</div>
+  <div id="column-b" class="dnd-box" draggable="true" data-testid="column-b">B</div>
+</div>
+
+<%- include('partials/footer', { script: '/js/drag-drop.js' }) %>
