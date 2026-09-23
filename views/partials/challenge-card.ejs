@@ -1,0 +1,12 @@
+<div class="col-12 col-sm-6 col-lg-4">
+  <a href="<%= c.path %>" class="card arcade-card" data-testid="card-<%= c.id %>">
+    <span class="badge arcade-chip" data-cat="<%= c.category %>"><%= categories[c.category] %></span>
+    <h3 class="arcade-card-title"><%= c.title %></h3>
+    <% if (c.technique) { %><p class="arcade-technique">Technique : <%= c.technique %></p><% } %>
+    <p class="arcade-card-desc"><%= c.desc %></p>
+    <div class="arcade-card-foot">
+      <span class="arcade-gems" aria-label="Difficulté"><%= '●'.repeat(c.difficulty) + '○'.repeat(3 - c.difficulty) %></span>
+      <span class="arcade-path"><%= c.path %></span>
+    </div>
+  </a>
+</div>

@@ -9,7 +9,8 @@
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "mutants": "node scripts/run-mutants.js"
   },
   "repository": {
     "type": "git",

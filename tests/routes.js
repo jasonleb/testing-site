@@ -24,6 +24,17 @@ const routes = {
   multipleWindowsNew: '/multiple-windows/new',
   basicAuth: '/basic-auth',
   checkboxes: '/checkboxes',
+  pricing: '/pricing',
+  pricingApi: '/api/pricing',
+  shipping: '/shipping',
+  shippingApi: '/api/shipping',
+  expenses: '/expenses',
+  expensesApi: {
+    list: '/api/expenses',
+    reset: '/api/expenses/reset',
+    note: (id) => `/api/expenses/${id}`,
+    action: (id, action) => `/api/expenses/${id}/${action}`,
+  },
   statusCodes: {
     base: '/status-codes',
     ok: '/status-codes/200',

@@ -1,0 +1,60 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'shipping' }) %>
+
+<p>Frais de livraison d'une commande selon le montant du panier, le statut du client, la zone et la taille du colis. Le calcul est fait côté serveur (<code>GET /api/shipping?amount=…&amp;zone=…&amp;premium=…&amp;bulky=…</code>).</p>
+
+<div class="pricing-layout">
+  <section>
+    <form id="shipping-form" data-testid="shipping-form" novalidate>
+      <label for="amount">Montant du panier (CHF)</label>
+      <input type="text" inputmode="decimal" id="amount" name="amount" data-testid="shipping-amount" autocomplete="off" placeholder="ex. 84.50">
+
+      <label for="zone">Zone de livraison</label>
+      <select id="zone" name="zone" data-testid="shipping-zone">
+        <option value="locale">Locale (même canton)</option>
+        <option value="nationale" selected>Nationale (Suisse)</option>
+        <option value="internationale">Internationale</option>
+      </select>
+
+      <label class="pricing-check">
+        <input type="checkbox" id="premium" name="premium" data-testid="shipping-premium">
+        Client premium
+      </label>
+      <label class="pricing-check">
+        <input type="checkbox" id="bulky" name="bulky" data-testid="shipping-bulky">
+        Colis volumineux
+      </label>
+
+      <button type="submit" id="shipping-submit" data-testid="shipping-submit">Calculer les frais</button>
+    </form>
+
+    <p id="shipping-error" class="error hidden" data-testid="shipping-error" role="alert"></p>
+
+    <div id="shipping-result" class="pricing-result hidden" data-testid="shipping-result" aria-live="polite">
+      <p id="shipping-undeliverable" class="error hidden" data-testid="shipping-undeliverable"></p>
+      <dl id="shipping-breakdown" data-testid="shipping-breakdown">
+        <dt>Frais de base</dt><dd>CHF <span id="shipping-base" data-testid="shipping-base"></span></dd>
+        <dt>Supplément</dt><dd>CHF <span id="shipping-surcharge" data-testid="shipping-surcharge"></span></dd>
+        <dt>Total livraison</dt><dd class="pricing-price">CHF <span id="shipping-total" data-testid="shipping-total"></span></dd>
+      </dl>
+    </div>
+  </section>
+
+  <section>
+    <table class="pricing-rules" data-testid="shipping-rules">
+      <thead><tr><th>Zone</th><th>Frais de base</th></tr></thead>
+      <tbody>
+        <tr><td>Locale</td><td>CHF 5.00</td></tr>
+        <tr><td>Nationale</td><td>CHF 9.00</td></tr>
+        <tr><td>Internationale</td><td>CHF 25.00</td></tr>
+      </tbody>
+    </table>
+    <ul class="pricing-notes">
+      <li>Client premium : frais de base offerts, dans toutes les zones.</li>
+      <li>Panier dès CHF 100.00 : frais de base offerts en zone locale et nationale.</li>
+      <li>Colis volumineux : supplément de CHF 15.00, offert uniquement aux clients premium en zone locale.</li>
+      <li>Colis volumineux : pas de livraison à l'international.</li>
+    </ul>
+  </section>
+</div>
+
+<%- include('partials/footer', { script: '/js/shipping.js' }) %>

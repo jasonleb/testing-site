@@ -3,7 +3,7 @@
 Site de test « bac à sable » pour s'entraîner à l'automatisation web (Selenium, Playwright, Cypress, Puppeteer…). Chaque page reproduit un défi classique d'automatisation avec des sélecteurs stables (`id` et `data-testid`).
 
 <p align="center">
-  <img src="docs/screenshots/accueil.png" width="49%" alt="Page d'accueil : grille des 18 défis">
+  <img src="docs/screenshots/accueil.png" width="49%" alt="Page d'accueil : grille des défis">
   <img src="docs/screenshots/defi.png" width="49%" alt="Page d'un défi : menu déroulant">
 </p>
 
@@ -13,7 +13,7 @@ Le site utilise un habillage Bootstrap 5 sur mesure (« Arcade des tests ») : f
 
 - Bootstrap est installé via npm (`node_modules/bootstrap`) et servi localement sur `/vendor/bootstrap` (pas de dépendance à un CDN).
 - Les styles propres au site sont dans `public/css/style.css`, qui surcharge les variables CSS de Bootstrap (`--bs-*`) plutôt que de dupliquer ses composants.
-- `data/challenges.js` exporte désormais `{ challenges, categories }` : chaque défi a une `category` (`formulaires`, `async`, `frames`, `reseau`, `avancees`) et une `difficulty` (1 à 3).
+- `data/challenges.js` exporte désormais `{ challenges, categories }` : chaque défi a une `category` (`formulaires`, `async`, `frames`, `reseau`, `avancees`, `metier`) et une `difficulty` (1 à 3).
 - Le défi affiché dans l'en-tête/pied de page (`current`) est déduit automatiquement de l'URL par un middleware dans `server.js` (comparaison avec `challenge.path`) : aucune vue n'a besoin de le repasser explicitement à `partials/footer`.
 
 ## Prérequis
@@ -58,6 +58,9 @@ Le site est servi sur http://localhost:3000 (variable `PORT` surchargeable).
 | Authentification HTTP Basic | `/basic-auth` | Réseau & HTTP | challenge 401 + en-tête `Authorization` (`admin` / `admin`) |
 | Redirection | `/redirect` | Réseau & HTTP | redirection HTTP 302 réelle |
 | Cases à cocher | `/checkboxes` | Formulaires | états initiaux différents + (dé)sélection globale |
+| Calculateur de tarif | `/pricing` | Règles métier | valeurs limites : tranches d'âge, réduction cumulable plafonnée, arrondi aux 5 centimes (API `GET /api/pricing`) |
+| Frais de livraison | `/shipping` | Règles métier | table de décision : montant × premium × zone × colis volumineux (API `GET /api/shipping`) |
+| Workflow de note de frais | `/expenses` | Règles métier | transitions d'état + 3 rôles, données isolées par session (API REST `/api/expenses`) |
 
 ## Structure du projet
 
@@ -68,8 +71,38 @@ data/challenges.js    { challenges, categories } — alimente la grille d'accuei
 views/                templates EJS (partials/header.ejs + partials/footer.ejs communs)
 public/css/style.css  styles Arcade (surcharge des variables Bootstrap)
 public/js/*.js        scripts client, un fichier par défi
+lib/*.js              logique métier des défis « Règles métier » (côté serveur)
+data/mutants.js       catalogue des bugs injectables (variable MUTANT)
+docs/stories/         user stories des défis « Règles métier » + corrigés PO
+scripts/run-mutants.js campagne de mutation (npm run mutants)
 uploads/               fichiers envoyés via /file-upload (ignoré par git, sauf .gitkeep)
 ```
+
+## Défis « Règles métier » et bugs injectables
+
+Les défis de la catégorie **Règles métier** (`/pricing`, `/shipping`, `/expenses`), regroupés dans une section à part sur la page d'accueil, testent la *conception* des tests plutôt que la technique d'automatisation. Chacun est livré avec :
+
+- une **user story** dans `docs/stories/<defi>.md`, volontairement incomplète comme dans la vraie vie ;
+- un **corrigé PO** (`docs/stories/<defi>.reponses-po.md`) : ambiguïtés attendues, règles consolidées, valeurs de référence ;
+- des **mutants** : bugs réalistes désactivés par défaut, décrits dans `data/mutants.js`.
+
+Activer un bug à la main, dans le navigateur (mémorisé par cookie jusqu'à désactivation) :
+
+```
+http://localhost:3000/pricing?mutant=tarif-borne-16
+http://localhost:3000/pricing?mutant=tarif-borne-16,tarif-arrondi
+http://localhost:3000/pricing?mutant=off
+```
+
+Ou pour tout le serveur, et en ligne de commande :
+
+```bash
+MUTANT=tarif-borne-16 npm start                      # lance le site avec un bug précis
+npm run mutants -- --challenge pricing               # joue tests/pricing.spec.js contre chaque mutant
+npm run mutants -- --challenge pricing --grep API    # idem, tests API seulement (sans navigateur)
+```
+
+Un mutant est **tué** si au moins un test échoue, il **survit** si tous les tests passent malgré le bug. Le score de mutation mesure donc la capacité réelle de la suite à détecter des régressions. Les suites fournies tuent les 16 mutants : 6/6 pour le tarif, 5/5 pour la livraison, 5/5 pour les notes de frais.
 
 ## Ajouter un nouveau défi
 
@@ -80,7 +113,7 @@ uploads/               fichiers envoyés via /file-upload (ignoré par git, sauf
 
 ## Tests automatisés (Playwright)
 
-Une suite Playwright complète (`tests/`) couvre les 18 pages du site — dialogues natifs, Shadow DOM, iframes imbriquées, glisser-déposer, upload de fichier, codes HTTP réels, authentification Basic, popups, etc.
+Une suite Playwright complète (`tests/`) couvre toutes les pages du site — dialogues natifs, Shadow DOM, iframes imbriquées, glisser-déposer, upload de fichier, codes HTTP réels, authentification Basic, popups, etc.
 
 ### Installation
 

@@ -2,6 +2,9 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
+const { computePrice, PricingError } = require('../lib/pricing');
+const { computeShipping, ShippingError } = require('../lib/shipping');
+const expenses = require('../lib/expenses');
 
 const router = express.Router();
 
@@ -212,5 +215,76 @@ router.get('/redirect/target', (req, res) => {
 router.get('/checkboxes', (req, res) => {
   res.render('checkboxes', { title: 'Cases à cocher' });
 });
+
+// --- Calculateur de tarif (règles métier) ---
+router.get('/pricing', (req, res) => {
+  res.render('pricing', { title: 'Calculateur de tarif' });
+});
+router.get('/api/pricing', (req, res) => {
+  try {
+    res.json(computePrice({ age: req.query.age, member: req.query.member }));
+  } catch (err) {
+    if (err instanceof PricingError) return res.status(400).json({ error: err.message });
+    throw err;
+  }
+});
+
+// --- Frais de livraison (règles métier) ---
+router.get('/shipping', (req, res) => {
+  res.render('shipping', { title: 'Frais de livraison' });
+});
+router.get('/api/shipping', (req, res) => {
+  try {
+    const { amount, premium, zone, bulky } = req.query;
+    res.json(computeShipping({ amount, premium, zone, bulky }));
+  } catch (err) {
+    if (err instanceof ShippingError) return res.status(400).json({ error: err.message });
+    throw err;
+  }
+});
+
+// --- Workflow de note de frais (règles métier) ---
+// Chaque navigateur (ou contexte de test) a son propre jeu de notes, via un cookie.
+const EXPENSES_COOKIE = 'expenses_sid';
+function expensesStore(req, res) {
+  let sid = req.cookies[EXPENSES_COOKIE];
+  if (!sid) {
+    sid = expenses.newSessionId();
+    res.cookie(EXPENSES_COOKIE, sid, { httpOnly: true, sameSite: 'lax' });
+  }
+  return { sid, store: expenses.getStore(sid) };
+}
+function expensesHandler(fn) {
+  return (req, res) => {
+    try {
+      const { sid, store } = expensesStore(req, res);
+      fn(req, res, store, sid);
+    } catch (err) {
+      if (err instanceof expenses.ExpenseError) return res.status(err.status).json({ error: err.message });
+      throw err;
+    }
+  };
+}
+
+router.get('/expenses', (req, res) => {
+  expensesStore(req, res);
+  res.render('expenses', { title: 'Workflow de note de frais', users: Object.values(expenses.USERS) });
+});
+router.get('/api/expenses', expensesHandler((req, res, store) => {
+  res.json(expenses.list(store, req.query.as));
+}));
+router.post('/api/expenses', expensesHandler((req, res, store) => {
+  res.status(201).json(expenses.create(store, req.body));
+}));
+router.post('/api/expenses/reset', expensesHandler((req, res, store, sid) => {
+  expenses.resetStore(sid);
+  res.status(204).end();
+}));
+router.put('/api/expenses/:id', expensesHandler((req, res, store) => {
+  res.json(expenses.update(store, req.params.id, req.body));
+}));
+router.post('/api/expenses/:id/:action', expensesHandler((req, res, store) => {
+  res.json(expenses.transition(store, req.params.id, req.params.action, req.body));
+}));
 
 module.exports = router;

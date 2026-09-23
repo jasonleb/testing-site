@@ -1,0 +1,52 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'pricing' }) %>
+
+<p>Calcul du prix d'un abonnement annuel selon l'âge et l'adhésion au club. Le calcul est fait côté serveur (<code>GET /api/pricing?age=…&amp;member=true</code>) : l'API se teste aussi directement.</p>
+
+<div class="pricing-layout">
+  <section>
+    <form id="pricing-form" data-testid="pricing-form" novalidate>
+      <label for="age">Âge du titulaire</label>
+      <input type="text" inputmode="numeric" id="age" name="age" data-testid="pricing-age" autocomplete="off">
+
+      <label class="pricing-check">
+        <input type="checkbox" id="member" name="member" data-testid="pricing-member">
+        Membre du club
+      </label>
+
+      <button type="submit" id="pricing-submit" data-testid="pricing-submit">Calculer le tarif</button>
+    </form>
+
+    <p id="pricing-error" class="error hidden" data-testid="pricing-error" role="alert"></p>
+
+    <div id="pricing-result" class="pricing-result hidden" data-testid="pricing-result" aria-live="polite">
+      <dl>
+        <dt>Catégorie</dt><dd id="pricing-category" data-testid="pricing-category"></dd>
+        <dt>Tarif de base</dt><dd>CHF <span id="pricing-base" data-testid="pricing-base"></span></dd>
+        <dt>Réduction</dt><dd><span id="pricing-discount" data-testid="pricing-discount"></span> %</dd>
+        <dt>À payer</dt><dd class="pricing-price">CHF <span id="pricing-final" data-testid="pricing-final"></span></dd>
+      </dl>
+    </div>
+  </section>
+
+  <section>
+    <table class="pricing-rules" data-testid="pricing-rules">
+      <thead><tr><th>Âge</th><th>Catégorie</th><th>Réduction</th></tr></thead>
+      <tbody>
+        <tr><td>0 – 5 ans</td><td>Enfant</td><td>Gratuit</td></tr>
+        <tr><td>6 – 15 ans</td><td>Junior</td><td>-50 %</td></tr>
+        <tr><td>16 – 25 ans</td><td>Jeune</td><td>-25 %</td></tr>
+        <tr><td>26 – 64 ans</td><td>Adulte</td><td>—</td></tr>
+        <tr><td>65 ans et +</td><td>Senior</td><td>-30 %</td></tr>
+      </tbody>
+    </table>
+    <ul class="pricing-notes">
+      <li>Tarif de base : CHF 89.90 / an.</li>
+      <li>Membre du club : -20 % supplémentaires, cumulables avec la réduction d'âge.</li>
+      <li>Réduction totale plafonnée à 50 % (la gratuité enfant n'est pas concernée).</li>
+      <li>Prix arrondi aux 5 centimes les plus proches.</li>
+      <li>Âge accepté : nombre entier de 0 à 120.</li>
+    </ul>
+  </section>
+</div>
+
+<%- include('partials/footer', { script: '/js/pricing.js' }) %>

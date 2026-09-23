@@ -3,6 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const { challenges, categories } = require('./data/challenges');
 const routes = require('./routes');
+const { activeMutants, mutantMiddleware } = require('./data/mutants');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +19,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(mutantMiddleware); // bugs injectables : ?mutant=… (voir data/mutants.js)
 
 // Déduit automatiquement le défi courant depuis l'URL, pour que header/footer
 // (inclus séparément) puissent afficher le badge et la navigation prev/next
@@ -43,4 +45,5 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`✅ Testing site démarré : http://localhost:${PORT}`);
+  if (activeMutants.length) console.log(`🧬 Mutant(s) actif(s) : ${activeMutants.join(', ')}`);
 });

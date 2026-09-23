@@ -1,0 +1,43 @@
+<%- include('partials/header', { title: title, challenges: challenges, current: 'expenses' }) %>
+
+<p>Cycle de vie d'une note de frais : <strong>Brouillon → Soumise → Approuvée → Payée</strong>, ou <strong>Rejetée</strong> puis reprise en brouillon. Choisis l'utilisateur au nom duquel tu agis : les actions proposées dépendent de son rôle et de l'état de chaque note. Les données sont propres à ton navigateur et se réinitialisent avec le bouton dédié. API : <code>/api/expenses</code>.</p>
+
+<div class="expenses-toolbar">
+  <div>
+    <label for="acting-as">Agir en tant que</label>
+    <select id="acting-as" data-testid="expenses-user">
+      <% users.forEach(function (u) { %>
+      <option value="<%= u.id %>"><%= u.name %> — <%= u.roleLabel %></option>
+      <% }); %>
+    </select>
+  </div>
+  <button type="button" id="expenses-reset" class="arcade-btn-secondary" data-testid="expenses-reset">Réinitialiser les données</button>
+</div>
+
+<p id="expenses-message" class="hidden" data-testid="expenses-message" role="status"></p>
+
+<div class="expenses-table-wrap">
+  <table class="expenses-table" data-testid="expenses-table">
+    <thead>
+      <tr><th>N°</th><th>Libellé</th><th>Montant</th><th>Auteur</th><th>État</th><th>Actions</th></tr>
+    </thead>
+    <tbody id="expenses-tbody" data-testid="expenses-tbody"></tbody>
+  </table>
+</div>
+
+<h3 class="expenses-form-title" id="expense-form-title" data-testid="expense-form-title">Nouvelle note de frais</h3>
+<form id="expense-form" data-testid="expense-form" novalidate>
+  <input type="hidden" id="expense-id" value="">
+  <label for="expense-label">Libellé</label>
+  <input type="text" id="expense-label" data-testid="expense-label" autocomplete="off" maxlength="120">
+
+  <label for="expense-amount">Montant (CHF)</label>
+  <input type="text" inputmode="decimal" id="expense-amount" data-testid="expense-amount" autocomplete="off">
+
+  <div class="button-row">
+    <button type="submit" id="expense-save" data-testid="expense-save">Créer la note</button>
+    <button type="button" id="expense-cancel" class="arcade-btn-secondary hidden" data-testid="expense-cancel">Annuler la modification</button>
+  </div>
+</form>
+
+<%- include('partials/footer', { script: '/js/expenses.js' }) %>

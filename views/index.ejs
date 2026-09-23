@@ -1,25 +1,52 @@
 <%- include('partials/header', { title: title, challenges: challenges, current: 'home' }) %>
+<%
+  var automation = challenges.filter(function (c) { return c.category !== 'metier'; });
+  var business = challenges.filter(function (c) { return c.category === 'metier'; });
+%>
 
 <div class="arcade-hero">
   <p class="arcade-eyebrow">Arcade des tests</p>
-  <h1>Entraîne ton script<br>contre 18 pièges réels</h1>
+  <h1>Entraîne ton script<br>contre <%= automation.length %> pièges réels</h1>
   <p class="arcade-lead">Dropdowns, iframes, Shadow DOM, popups… Choisis un défi et vois si ton framework d'automatisation s'en sort.</p>
 </div>
 
-<div class="row g-4 arcade-grid" id="challenge-grid">
-  <% challenges.forEach(function (c) { %>
-  <div class="col-12 col-sm-6 col-lg-4">
-    <a href="<%= c.path %>" class="card arcade-card" data-testid="card-<%= c.id %>">
-      <span class="badge arcade-chip" data-cat="<%= c.category %>"><%= categories[c.category] %></span>
-      <h3 class="arcade-card-title"><%= c.title %></h3>
-      <p class="arcade-card-desc"><%= c.desc %></p>
-      <div class="arcade-card-foot">
-        <span class="arcade-gems" aria-label="Difficulté"><%= '●'.repeat(c.difficulty) + '○'.repeat(3 - c.difficulty) %></span>
-        <span class="arcade-path"><%= c.path %></span>
-      </div>
-    </a>
+<section aria-labelledby="automation-title">
+  <div class="arcade-section-head">
+    <h2 id="automation-title">Pièges d'automatisation</h2>
+    <span class="arcade-section-count"><%= automation.length %> défis</span>
   </div>
-  <% }); %>
-</div>
+  <div class="row g-4 arcade-grid" id="challenge-grid" data-testid="automation-grid">
+    <% automation.forEach(function (c) { %>
+    <%- include('partials/challenge-card', { c: c }) %>
+    <% }); %>
+  </div>
+</section>
+
+<section class="arcade-section-business" aria-labelledby="business-title" data-testid="business-section">
+  <div class="arcade-section-head">
+    <h2 id="business-title">Règles métier</h2>
+    <span class="arcade-section-count"><%= business.length %> défis</span>
+  </div>
+
+  <div class="business-intro" data-testid="business-intro">
+    <div>
+      <p>Ici, la difficulté n'est plus technique : les pages sont simples à automatiser. <strong>Le défi, c'est de savoir quoi tester.</strong></p>
+      <p>Chaque défi applique des règles de gestion (tarifs, conditions combinées, cycle de vie avec des rôles) et cache des <strong>bugs réalistes</strong>, désactivés par défaut. Une bonne suite de tests doit les détecter sans savoir où ils sont.</p>
+      <p>On s'y entraîne aux techniques de conception de tests : valeurs limites, tables de décision, transitions d'état.</p>
+    </div>
+    <ol class="business-steps">
+      <li><span><strong>Lis la user story</strong> du défi dans <code>docs/stories/</code>. Elle est volontairement imparfaite : note les questions à poser au PO.</span></li>
+      <li><span><strong>Conçois et écris tes tests</strong> à partir des règles, via l'interface ou l'API.</span></li>
+      <li><span><strong>Active un bug</strong> avec <code>?mutant=&lt;nom&gt;</code> dans l'URL (liste dans <code>data/mutants.js</code>, <code>?mutant=off</code> pour revenir) et vérifie que tes tests échouent.</span></li>
+      <li><span><strong>Mesure ton score</strong> avec <code>npm run mutants</code> : la part des bugs que ta suite détecte.</span></li>
+    </ol>
+  </div>
+
+  <div class="row g-4 arcade-grid" id="business-grid" data-testid="business-grid">
+    <% business.forEach(function (c) { %>
+    <%- include('partials/challenge-card', { c: c }) %>
+    <% }); %>
+  </div>
+</section>
 
 <%- include('partials/footer') %>

@@ -18,7 +18,8 @@ module.exports = defineConfig({
     // { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
     // { name: 'webkit', use: { ...devices['Desktop Safari'] } },
   ],
-  webServer: {
+  // Si BASE_URL est fourni (ex: campagne de mutation), le serveur est déjà lancé ailleurs.
+  webServer: process.env.BASE_URL ? undefined : {
     command: 'npm start',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,

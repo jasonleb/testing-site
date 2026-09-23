@@ -4,6 +4,7 @@ const categories = {
   frames: 'Fenêtres & frames',
   reseau: 'Réseau & HTTP',
   avancees: 'Interactions avancées',
+  metier: 'Règles métier',
 };
 
 const challenges = [
@@ -43,6 +44,15 @@ const challenges = [
     desc: "Redirection HTTP 302 réelle vers une page cible." },
   { path: '/checkboxes', id: 'checkboxes', title: 'Cases à cocher', category: 'formulaires', difficulty: 1,
     desc: "États initiaux différents, plus bascule globale via JavaScript." },
+  { path: '/pricing', id: 'pricing', title: 'Calculateur de tarif', category: 'metier', difficulty: 2,
+    technique: 'Valeurs limites', story: 'docs/stories/tarif.md',
+    desc: "Tarifs par tranche d'âge, réduction membre cumulable et plafonnée : un terrain de jeu pour les valeurs limites." },
+  { path: '/shipping', id: 'shipping', title: 'Frais de livraison', category: 'metier', difficulty: 2,
+    technique: 'Table de décision', story: 'docs/stories/livraison.md',
+    desc: "Quatre conditions combinées (montant, premium, zone, colis volumineux) : 24 combinaisons, et des exceptions." },
+  { path: '/expenses', id: 'expenses', title: 'Workflow de note de frais', category: 'metier', difficulty: 3,
+    technique: "Transitions d'état", story: 'docs/stories/note-de-frais.md',
+    desc: "Cycle de vie d'une note (brouillon → payée) avec trois rôles : qui peut faire quoi, et dans quel état." },
 ];
 
 module.exports = { challenges, categories };

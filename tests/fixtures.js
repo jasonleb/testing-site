@@ -27,6 +27,9 @@ const { MultipleWindowsPage, MultipleWindowsNewPage } = require('./pages/Multipl
 const { BasicAuthPage } = require('./pages/BasicAuthPage');
 const { RedirectPage, RedirectTargetPage } = require('./pages/RedirectPage');
 const { CheckboxesPage } = require('./pages/CheckboxesPage');
+const { PricingPage } = require('./pages/PricingPage');
+const { ShippingPage } = require('./pages/ShippingPage');
+const { ExpensesPage } = require('./pages/ExpensesPage');
 
 const test = base.test.extend({
   homePage: async ({ page }, use) => use(new HomePage(page)),
@@ -50,6 +53,9 @@ const test = base.test.extend({
   basicAuthPage: async ({ page }, use) => use(new BasicAuthPage(page)),
   redirectPage: async ({ page }, use) => use(new RedirectPage(page)),
   checkboxesPage: async ({ page }, use) => use(new CheckboxesPage(page)),
+  pricingPage: async ({ page }, use) => use(new PricingPage(page)),
+  shippingPage: async ({ page }, use) => use(new ShippingPage(page)),
+  expensesPage: async ({ page }, use) => use(new ExpensesPage(page)),
 });
 
 const expect = base.expect;
